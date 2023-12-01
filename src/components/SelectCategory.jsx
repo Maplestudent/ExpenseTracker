@@ -1,5 +1,5 @@
-import React from 'react';
 import { Picker } from '@react-native-picker/picker';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const SelectCategory = ({ selectedValue, onValueChange, categories }) => (
