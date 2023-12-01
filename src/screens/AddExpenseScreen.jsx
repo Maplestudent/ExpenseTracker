@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
+import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
-import TransactionType from '../components/TransactionType';
 import SelectCategory from '../components/SelectCategory';
 import SelectDate from '../components/SelectDate';
-import AddNotes from '../components/AddNotes';
+import TransactionType from '../components/TransactionType';
 
 
 function AddExpenseScreen() {
@@ -13,17 +13,25 @@ function AddExpenseScreen() {
     const [category, setCategory] = useState('');
     const [date, setDate] = useState(new Date());
     const [note, setNote] = useState('');
+    const categories = [
+      { label: 'Food', value: 'Food' },
+      { label: 'Transport', value: 'Transport' },
+      { label: 'Utilities', value: 'Utilities' },
+      { label: 'Entertainment', value: 'Entertainment' },
+      { label: 'Healthcare', value: 'Healthcare' }
+    ];
+    
 
-    return(
-        <ScrollView style={styles.container}>
-            <Text style={styles.header}>Add Expense</Text>
-            <InputAmount value={amount} onChange={setAmount} />
-            <TransactionType type={type} onSelect={setType} />
-            <SelectCategory selectedValue={category} onValueChange={setCategory} categories={[]} />
-            <SelectDate date={date} onDateChange={setDate} />
-            <AddNotes value={note} onChange={setNote} />
-        </ScrollView>
-    );
+    return (
+      <ScrollView style={styles.container}>
+          <Text style={styles.header}>Add Expense</Text>
+          <InputAmount value={amount} onChange={setAmount} />
+          <TransactionType type={type} onSelect={setType} />
+          <SelectCategory selectedValue={category} onValueChange={setCategory} categories={categories} />
+          <SelectDate date={date} onDateChange={setDate} />
+          <AddNotes value={note} onChange={setNote} />
+      </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
