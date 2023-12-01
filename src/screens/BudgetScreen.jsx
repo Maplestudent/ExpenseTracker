@@ -12,7 +12,7 @@ function BudgetScreen() {
 
     const handleStatsScreen = () => {
         console.log('See Stats button tapped');
-        navigation.navigate('StatsScreen'); // Replace 'StatsScreen' with your screen name
+        navigation.navigate('Stats'); // Replace 'StatsScreen' with your screen name
     };
 
     return (
