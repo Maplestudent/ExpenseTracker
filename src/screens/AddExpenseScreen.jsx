@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
 import SelectCategory from '../components/SelectCategory';
@@ -57,7 +57,7 @@ function AddExpenseScreen({ navigation }) {
       <AddNotes value={note} onChange={setNote} />
 
       <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
-        <Text style={styles.buttonText}>Save Expense</Text>
+        <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Stats')}>
