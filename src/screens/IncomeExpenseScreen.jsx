@@ -69,36 +69,36 @@ function IncomeExpenseScreen() {
 
       {/* Income and Expenses Table */}
       <View style={styles.table}>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Total Income:</Text>
-          <Text style={styles.tableCell}>{totalIncome.toFixed(2)}</Text>
-        </View>
-        {/* Display total and breakdown of income */}
-        {Object.entries(incomeByCategory).map(([category, amount]) => (
-          <View style={styles.tableRow} key={'income-' + category}>
-            <Text style={styles.tableCell}>{category}:</Text>
-            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
-          </View>
-        ))}
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Total Expenses:</Text>
-          <Text style={styles.tableCell}>{totalExpenses.toFixed(2)}</Text>
-        </View>
-        {/* Display total and breakdown of expenses */}
-        {Object.entries(expensesByCategory).map(([category, amount]) => (
-          <View style={styles.tableRow} key={'expense-' + category}>
-            <Text style={styles.tableCell}>{category}:</Text>
-            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
-          </View>
-        ))}
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Balance:</Text>
-          <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
-            {balance.toFixed(2)}
-          </Text>
-        </View>
-      </View>
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.incomeText]}>Total Income:</Text>
+      <Text style={[styles.tableCell, styles.incomeText]}>{totalIncome.toFixed(2)}</Text>
     </View>
+    {/* Display total and breakdown of income */}
+    {Object.entries(incomeByCategory).map(([category, amount]) => (
+      <View style={styles.tableRow} key={'income-' + category}>
+        <Text style={styles.tableCell}>{category}:</Text>
+        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+      </View>
+    ))}
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.expenseText]}>Total Expenses:</Text>
+      <Text style={[styles.tableCell, styles.expenseText]}>{totalExpenses.toFixed(2)}</Text>
+    </View>
+    {/* Display total and breakdown of expenses */}
+    {Object.entries(expensesByCategory).map(([category, amount]) => (
+      <View style={styles.tableRow} key={'expense-' + category}>
+        <Text style={styles.tableCell}>{category}:</Text>
+        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+      </View>
+    ))}
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.incomeText]}>Balance:</Text>
+      <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
+        {balance.toFixed(2)}
+      </Text>
+    </View>
+  </View>
+</View>
   );
 }
 
@@ -106,25 +106,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5', // Use a light gray as in the image background
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 30,
+    color: '#008080', // Color similar to the header in the image
   },
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc', // Assuming a border like the one in the image
+    borderRadius: 5,
+    backgroundColor: '#fff', // White background for the picker
   },
   picker: {
-    width: 120,
-    height: 44,
+    flex: 1,
+    height: 50, // Adjusted for better touch area
+    color: '#008080', // Picker text color
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    fontSize: 18,
+  },
+  button: {
+    backgroundColor: '#008080', // Button background color
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   table: {
-    // Style your table as needed
+    // Your table styles will go here
   },
   tableRow: {
     flexDirection: 'row',
@@ -136,7 +163,14 @@ const styles = StyleSheet.create({
   tableCell: {
     fontSize: 18,
   },
+  expenseText: {
+    color: 'red', // Set the expense text to red
+  },
+  incomeText: {
+    color: 'green', // Set the income text to green
+  },
   // Add more styles as needed
 });
+
 
 export default IncomeExpenseScreen;

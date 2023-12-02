@@ -23,71 +23,13 @@ function BudgetScreen() {
         navigation.navigate('IncomeExpenseScreen'); // Navigate to IncomeExpenseScreen
     };
 
-    const handlePreviousMonth = () => {
-        const [month, year] = datePeriod.split(' ');
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
     
-        let currentMonthIndex = months.indexOf(month);
-        let currentYear = parseInt(year);
-    
-        if (currentMonthIndex === 0) {
-            currentMonthIndex = 11; // December
-            currentYear--;
-        } else {
-            currentMonthIndex--;
-        }
-    
-        const previousMonth = `${months[currentMonthIndex]} ${currentYear}`;
-        setDatePeriod(previousMonth);
-    };
-    
-    const handleNextMonth = () => {
-        const [month, year] = datePeriod.split(' ');
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-    
-        let currentMonthIndex = months.indexOf(month);
-        let currentYear = parseInt(year);
-    
-        if (currentMonthIndex === 11) {
-            currentMonthIndex = 0; // January
-            currentYear++;
-        } else {
-            currentMonthIndex++;
-        }
-    
-        const nextMonth = `${months[currentMonthIndex]} ${currentYear}`;
-        setDatePeriod(nextMonth);
-    };
 
     return (
-        <View style={styles.container}>
-          <View style={styles.userContainer}>
-            <Text style={styles.title}>Welcome to JK Expense Tracker!</Text>
-          </View>
-    
-          <View style={styles.datePeriodContainer}>
-            <TouchableOpacity onPress={handlePreviousMonth}>
-              <Text style={styles.arrow}>{'< '}</Text>
-            </TouchableOpacity>
-            <Text style={styles.datePeriodText}>{datePeriod}</Text>
-            <TouchableOpacity onPress={handleNextMonth}>
-              <Text style={styles.arrow}>{' >'}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.button1} onPress={handleIncomeExpenseScreen}>
-            <Text style={styles.text}>View Income & Expenses</Text>
-          </TouchableOpacity>
-
-          <View style={styles.buttonRow}>
-            <TouchableOpacity style={[styles.button2, styles.buttonWithMargin]} onPress={handleAddExpense}>
-              <Text style={styles.text}>Add New Expense</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            
+            <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
+                <Text style={styles.text}>Add New Expense</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button3} onPress={handleStatsScreen}>
               <Text style={styles.text}>See Stats</Text>
