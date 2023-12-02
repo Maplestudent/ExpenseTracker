@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
 import SelectCategory from '../components/SelectCategory';
@@ -41,10 +41,20 @@ function AddExpenseScreen({ navigation }) {
     setCategory(newCategories[0].value); // Reset category when type changes
   };
 
+  const resetForm = () => {
+    setAmount('');
+    setType('Expense');
+    setCategory('Food');
+    setDate(new Date());
+    setNote('');
+    setCategories(expenseCategories);
+  };
+
+
   const handleAddExpense = () => {
     const newExpense = { amount, type, category, date: date.toISOString(), note };
     addExpense(newExpense);
-    navigation.navigate('Stats');
+    resetForm(); // Reset form fields after adding expense
   };
 
   return (
