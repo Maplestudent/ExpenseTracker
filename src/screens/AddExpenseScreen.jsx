@@ -42,9 +42,13 @@ function AddExpenseScreen({ navigation }) {  // Added navigation prop here
           <SelectDate date={date} onDateChange={setDate} />
           <AddNotes value={note} onChange={setNote} />
 
-          <Button
+      <Button
         title="Save Expense"
         onPress={handleAddExpense} // Use handleAddExpense
+      />
+      <Button
+        title="View Stats"
+        onPress={() => navigation.navigate('Stats')} // Navigate to StatsScreen
       />
       <Button
         title="Go to Budget"

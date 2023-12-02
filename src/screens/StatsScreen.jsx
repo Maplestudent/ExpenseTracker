@@ -11,7 +11,8 @@ function StatsScreen() {
 
 
     // Convert the date string back to a Date object
-    
+    const filteredTransactions = expenses.filter(transaction => transaction.type === type);
+
 
 
     const handlePreviousMonth = () => {
@@ -65,18 +66,19 @@ function StatsScreen() {
             </View>
             <TransactionType type={type} onSelect={setType} />
 
-            {expenses.map((expense, index) => (
+            {filteredTransactions.map((transaction, index) => (
                 <View key={index} style={styles.expenseContainer}>
-                    <Text style={styles.expenseText}>Amount: {expense.amount}</Text>
-                    <Text style={styles.expenseText}>Type: {expense.type}</Text>
-                    <Text style={styles.expenseText}>Category: {expense.category}</Text>
-                    <Text style={styles.expenseText}>Date: {new Date(expense.date).toDateString()}</Text>
-                    <Text style={styles.expenseText}>Note: {expense.note}</Text>
+                    <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
+                    <Text style={styles.expenseText}>Type: {transaction.type}</Text>
+                    <Text style={styles.expenseText}>Category: {transaction.category}</Text>
+                    <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
+                    <Text style={styles.expenseText}>Note: {transaction.note}</Text>
                 </View>
             ))}
         </ScrollView>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
