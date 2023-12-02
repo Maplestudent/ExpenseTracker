@@ -17,7 +17,8 @@ function App() {
           <Stack.Screen name="AddExpense" component={AddExpenseScreen} />
           <Stack.Screen name="Budget" component={BudgetScreen} />
           <Stack.Screen name="Stats" component={StatsScreen} />
-          <Stack.Screen name="IncomeExpenseScreen" component={IncomeExpenseScreen} />
+          <Stack.Screen name="IncomeExpenseScreen" component={IncomeExpenseScreen} options={{ title: 'Income & Expense' }}  // Set the title here
+/>
         </Stack.Navigator>
       </NavigationContainer>
     </StorageProvider>
