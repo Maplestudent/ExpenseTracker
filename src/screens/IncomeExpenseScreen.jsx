@@ -1,10 +1,7 @@
-import { Picker } from '@react-native-picker/picker'; // Correctly import Picker
+import { Picker } from '@react-native-picker/picker';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StorageContext } from '../components/Storage';
-
-// ... [rest of your component code]
-
 
 function IncomeExpenseScreen() {
   const { expenses } = useContext(StorageContext);
@@ -43,8 +40,11 @@ function IncomeExpenseScreen() {
   const monthItems = Array.from({ length: 12 }, (_, i) => (
     <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
   ));
-  const yearItems = Array.from({ length: 10 }, (_, i) => (
-    <Picker.Item key={i} label={`${currentYear - i}`} value={currentYear - i} />
+
+  // Allow the year picker to go beyond 2023
+  const yearsToDisplay = 20; // Display years from the current year to 20 years in the future
+  const yearItems = Array.from({ length: yearsToDisplay }, (_, i) => (
+    <Picker.Item key={i} label={`${currentYear + i}`} value={currentYear + i} />
   ));
 
   return (
@@ -69,36 +69,36 @@ function IncomeExpenseScreen() {
 
       {/* Income and Expenses Table */}
       <View style={styles.table}>
-    <View style={styles.tableRow}>
-      <Text style={[styles.tableCell, styles.incomeText]}>Total Income:</Text>
-      <Text style={[styles.tableCell, styles.incomeText]}>{totalIncome.toFixed(2)}</Text>
-    </View>
-    {/* Display total and breakdown of income */}
-    {Object.entries(incomeByCategory).map(([category, amount]) => (
-      <View style={styles.tableRow} key={'income-' + category}>
-        <Text style={styles.tableCell}>{category}:</Text>
-        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, styles.incomeText]}>Total Income:</Text>
+          <Text style={[styles.tableCell, styles.incomeText]}>{totalIncome.toFixed(2)}</Text>
+        </View>
+        {/* Display total and breakdown of income */}
+        {Object.entries(incomeByCategory).map(([category, amount]) => (
+          <View style={styles.tableRow} key={'income-' + category}>
+            <Text style={styles.tableCell}>{category}:</Text>
+            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+          </View>
+        ))}
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, styles.expenseText]}>Total Expenses:</Text>
+          <Text style={[styles.tableCell, styles.expenseText]}>{totalExpenses.toFixed(2)}</Text>
+        </View>
+        {/* Display total and breakdown of expenses */}
+        {Object.entries(expensesByCategory).map(([category, amount]) => (
+          <View style={styles.tableRow} key={'expense-' + category}>
+            <Text style={styles.tableCell}>{category}:</Text>
+            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+          </View>
+        ))}
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, styles.incomeText]}>Balance:</Text>
+          <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
+            {balance.toFixed(2)}
+          </Text>
+        </View>
       </View>
-    ))}
-    <View style={styles.tableRow}>
-      <Text style={[styles.tableCell, styles.expenseText]}>Total Expenses:</Text>
-      <Text style={[styles.tableCell, styles.expenseText]}>{totalExpenses.toFixed(2)}</Text>
     </View>
-    {/* Display total and breakdown of expenses */}
-    {Object.entries(expensesByCategory).map(([category, amount]) => (
-      <View style={styles.tableRow} key={'expense-' + category}>
-        <Text style={styles.tableCell}>{category}:</Text>
-        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
-      </View>
-    ))}
-    <View style={styles.tableRow}>
-      <Text style={[styles.tableCell, styles.incomeText]}>Balance:</Text>
-      <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
-        {balance.toFixed(2)}
-      </Text>
-    </View>
-  </View>
-</View>
   );
 }
 
@@ -106,28 +106,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f5f5f5', // Use a light gray as in the image background
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 30,
-    color: '#008080', // Color similar to the header in the image
+    color: '#008080',
   },
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#ccc', // Assuming a border like the one in the image
+    borderColor: '#ccc',
     borderRadius: 5,
-    backgroundColor: '#fff', // White background for the picker
+    backgroundColor: '#fff',
   },
   picker: {
     flex: 1,
-    height: 50, // Adjusted for better touch area
-    color: '#008080', // Picker text color
+    height: 50,
+    color: '#008080',
   },
   input: {
     borderWidth: 1,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   button: {
-    backgroundColor: '#008080', // Button background color
+    backgroundColor: '#008080',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
@@ -150,9 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  table: {
-    // Your table styles will go here
-  },
+  table: {},
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -164,13 +162,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   expenseText: {
-    color: 'red', // Set the expense text to red
+    color: 'red',
   },
   incomeText: {
-    color: 'green', // Set the income text to green
+    color: 'green',
   },
-  // Add more styles as needed
 });
-
 
 export default IncomeExpenseScreen;
