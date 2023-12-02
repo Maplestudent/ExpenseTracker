@@ -1,17 +1,11 @@
-
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import TransactionType from '../components/TransactionType';
 
-
-function StatsScreen({ route }) {
+function StatsScreen() {
     const [type, setType] = useState('Expense');
     const [startDate, setStartDate] = useState('2023/10/01');
     const [endDate, setEndDate] = useState('2023/10/30');
-    const newExpense = route.params?.newExpense; // Get newExpense from navigation parameters
-    const expenseDate = newExpense?.date ? new Date(newExpense.date) : null;
-
-
 
     const handlePreviousMonth = () => {
         const [year, month, day] = startDate.split('/');
@@ -63,16 +57,6 @@ function StatsScreen({ route }) {
                 </TouchableHighlight>
             </View>
             <TransactionType type={type} onSelect={setType} />
-
-            {newExpense && (
-                <View style={styles.expenseContainer}>
-                    <Text style={styles.expenseText}>Amount: {newExpense.amount}</Text>
-                    <Text style={styles.expenseText}>Type: {newExpense.type}</Text>
-                    <Text style={styles.expenseText}>Category: {newExpense.category}</Text>
-                    <Text style={styles.expenseText}>Date: {expenseDate ? expenseDate.toDateString() : 'Invalid Date'}</Text>
-                    <Text style={styles.expenseText}>Note: {newExpense.note}</Text>
-                </View>
-            )}
         </ScrollView>
     );
 }
@@ -100,18 +84,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
-
-    expenseContainer: {
-        backgroundColor: '#e0e0e0',
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    expenseText: {
-        fontSize: 14,
-        marginBottom: 5,
-    },
 });
-
 
 export default StatsScreen;
