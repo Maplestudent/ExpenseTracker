@@ -6,7 +6,7 @@ import TransactionType from '../components/TransactionType';
 
 function StatsScreen() {
     const [type, setType] = useState('Expense');
-    const [selectedDate, setSelectedDate] = useState(new Date('2023-10-01'));
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const { expenses, deleteExpense } = useContext(StorageContext);
     const [showDatePicker, setShowDatePicker] = useState(false);
 

@@ -4,7 +4,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 function BudgetScreen() {
     const navigation = useNavigation();
-    const [datePeriod, setDatePeriod] = useState('October 2023');
+    const currentDate = new Date(); // Get current date
+    const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
+    const currentYear = currentDate.getFullYear();
+    const [datePeriod, setDatePeriod] = useState(`${currentMonth} ${currentYear}`); // Set to current month and year
 
     const handleAddExpense = () => {
         console.log('Add expense button tapped');
