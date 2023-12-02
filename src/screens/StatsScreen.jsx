@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { StorageContext } from '../components/Storage'; // Import the StorageContext
 import TransactionType from '../components/TransactionType';
 
@@ -7,7 +7,10 @@ function StatsScreen() {
     const [type, setType] = useState('Expense');
     const [startDate, setStartDate] = useState('2023/10/01');
     const [endDate, setEndDate] = useState('2023/10/30');
-    const { expenses } = useContext(StorageContext); // Use the context
+    const { expenses, deleteExpense } = useContext(StorageContext); // Use the deleteExpense function from the context
+    const handleDelete = (id) => {
+        deleteExpense(id);
+    };
 
 
     // Convert the date string back to a Date object
@@ -65,18 +68,21 @@ function StatsScreen() {
                 </TouchableHighlight>
             </View>
             <TransactionType type={type} onSelect={setType} />
-
-            {filteredTransactions.map((transaction, index) => (
-                <View key={index} style={styles.expenseContainer}>
-                    <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
-                    <Text style={styles.expenseText}>Type: {transaction.type}</Text>
-                    <Text style={styles.expenseText}>Category: {transaction.category}</Text>
-                    <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
-                    <Text style={styles.expenseText}>Note: {transaction.note}</Text>
-                </View>
+      
+            {filteredTransactions.map((transaction) => (
+                <View key={transaction.id} style={styles.expenseContainer}>
+                <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
+                <Text style={styles.expenseText}>Type: {transaction.type}</Text>
+                <Text style={styles.expenseText}>Category: {transaction.category}</Text>
+                <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
+                <Text style={styles.expenseText}>Note: {transaction.note}</Text>
+                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(transaction.id)}>
+                  <Text style={styles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
             ))}
         </ScrollView>
-    );
+      );      
 }
 
 
@@ -112,6 +118,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 5,
     },
+    deleteButton: {
+        backgroundColor: 'red', // Example style, change as needed
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+      },
+      deleteButtonText: {
+        color: 'white',
+        textAlign: 'center',
+      },
 });
 
 export default StatsScreen;

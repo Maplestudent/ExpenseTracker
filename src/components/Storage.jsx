@@ -1,4 +1,3 @@
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useEffect, useState } from 'react';
 
@@ -14,8 +13,7 @@ export const StorageProvider = ({ children }) => {
         setExpenses(JSON.parse(savedExpenses));
       }
     } catch (e) {
-      // Error retrieving data
-      console.error(e);
+      console.error(e); // Error retrieving data
     }
   };
 
@@ -24,18 +22,27 @@ export const StorageProvider = ({ children }) => {
   }, []);
 
   const addExpense = async (newExpense) => {
-    const updatedExpenses = [...expenses, newExpense];
+    const updatedExpenses = [...expenses, { ...newExpense, id: Date.now() }]; // Ensure each new expense has a unique ID
     try {
       await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
       setExpenses(updatedExpenses);
     } catch (e) {
-      // Error saving data
-      console.error(e);
+      console.error(e); // Error saving data
+    }
+  };
+
+  const deleteExpense = async (id) => {
+    const updatedExpenses = expenses.filter(expense => expense.id !== id);
+    try {
+      await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      setExpenses(updatedExpenses);
+    } catch (e) {
+      console.error(e); // Error deleting data
     }
   };
 
   return (
-    <StorageContext.Provider value={{ expenses, addExpense }}>
+    <StorageContext.Provider value={{ expenses, addExpense, deleteExpense }}>
       {children}
     </StorageContext.Provider>
   );
