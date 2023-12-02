@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text } from 'react-native';
 import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
 import SelectCategory from '../components/SelectCategory';
@@ -7,19 +7,19 @@ import SelectDate from '../components/SelectDate';
 import TransactionType from '../components/TransactionType';
 
 
-function AddExpenseScreen() {
-    const [amount, setAmount] = useState('');
-    const [type, setType] = useState('Expense'); 
-    const [category, setCategory] = useState('');
-    const [date, setDate] = useState(new Date());
-    const [note, setNote] = useState('');
-    const categories = [
-      { label: 'Food', value: 'Food' },
-      { label: 'Transport', value: 'Transport' },
-      { label: 'Utilities', value: 'Utilities' },
-      { label: 'Entertainment', value: 'Entertainment' },
-      { label: 'Healthcare', value: 'Healthcare' }
-    ];
+function AddExpenseScreen({ navigation }) {  // Added navigation prop here
+  const [amount, setAmount] = useState('');
+  const [type, setType] = useState('Expense');
+  const [category, setCategory] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [note, setNote] = useState('');
+  const categories = [
+    { label: 'Food', value: 'Food' },
+    { label: 'Transport', value: 'Transport' },
+    { label: 'Utilities', value: 'Utilities' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Healthcare', value: 'Healthcare' }
+  ];
     
 
     return (
@@ -30,6 +30,14 @@ function AddExpenseScreen() {
           <SelectCategory selectedValue={category} onValueChange={setCategory} categories={categories} />
           <SelectDate date={date} onDateChange={setDate} />
           <AddNotes value={note} onChange={setNote} />
+
+          <Button
+                title="Go to Stats Screen"
+                onPress={() => navigation.navigate('Stats')}  // Use the name of the screen as defined in the Stack.Navigator
+            /><Button
+            title="Go to Budget"
+            onPress={() => navigation.navigate('Budget')}  // Use the name of the screen as defined in the Stack.Navigator
+        />
       </ScrollView>
   );
 }
