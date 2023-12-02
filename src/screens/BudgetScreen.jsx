@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
 function BudgetScreen() {
     const navigation = useNavigation();
@@ -66,36 +66,67 @@ function BudgetScreen() {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={styles.datePeriodContainer}>
-                <TouchableOpacity onPress={handlePreviousMonth}>
-                    <Text style={styles.arrow}>{'< '}</Text>
-                </TouchableOpacity>
-                <Text style={styles.datePeriodText}>{datePeriod}</Text>
-                <TouchableOpacity onPress={handleNextMonth}>
-                    <Text style={styles.arrow}>{' >'}</Text>
-                </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
-                <Text style={styles.text}>Add New Expense</Text>
+        <View style={styles.container}>
+          <View style={styles.userContainer}>
+            <Text style={styles.title}>Welcome to JK Expense Tracker!</Text>
+          </View>
+    
+          <View style={styles.datePeriodContainer}>
+            <TouchableOpacity onPress={handlePreviousMonth}>
+              <Text style={styles.arrow}>{'< '}</Text>
             </TouchableOpacity>
+            <Text style={styles.datePeriodText}>{datePeriod}</Text>
+            <TouchableOpacity onPress={handleNextMonth}>
+              <Text style={styles.arrow}>{' >'}</Text>
+            </TouchableOpacity>
+          </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleStatsScreen}>
-                <Text style={styles.text}>See Stats</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleIncomeExpenseScreen}>
-                <Text style={styles.text}>View Income & Expenses</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.button1} onPress={handleIncomeExpenseScreen}>
+            <Text style={styles.text}>View Income & Expenses</Text>
+          </TouchableOpacity>
 
-            
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={[styles.button2, styles.buttonWithMargin]} onPress={handleAddExpense}>
+              <Text style={styles.text}>Add New Expense</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button3} onPress={handleStatsScreen}>
+              <Text style={styles.text}>See Stats</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-    );
+      );
 }
 
 const styles = StyleSheet.create({
-    button: {
+    userContainer:{
+        paddingTop: 20,
+        paddingLeft: 10,
+        height: 380,
+        backgroundColor: '#5cccc4',
+        borderBottomLeftRadius: 60,
+        borderBottomRightRadius: 60,
+    },
+    title:{
+        marginTop: 100,
+        color: '#ffffff',
+        fontSize: 45, 
+        fontWeight: 'bold',
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'center', 
+    },
+    buttonWithMargin: {
+        marginRight: 10, 
+    },
+    button1: {
+        height: 100,
+        marginLeft: 20,
+        marginRight: 20,
+        alignItems: 'center',
+        justifyContent: 'center', 
         backgroundColor: '#ffffff',
-        borderRadius: 20,
+        borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 15,
         shadowColor: "#000",
@@ -104,11 +135,52 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         marginVertical: 10,
+
+        
+    },
+    button2: {
+        height: 110,
+        width: 210,
+        marginLeft: 10,
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        marginVertical: 10,
+        
+    },
+    button3: {
+        height: 110,
+        width: 120,
+        marginLeft: 10,
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        marginVertical: 10,
+        
     },
     text: {
-        color: '#007bff',
+        color: '#5cccc4',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     datePeriodContainer: {
         flexDirection: 'row',
