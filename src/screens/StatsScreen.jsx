@@ -1,5 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker'; // Import the DateTimePicker component
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StorageContext } from '../components/Storage'; // Import the StorageContext
 import TransactionType from '../components/TransactionType';
@@ -31,8 +31,26 @@ function StatsScreen() {
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const toggleDatePicker = () => {
-        setShowDatePicker(!showDatePicker);
+        setShowDatePicker(!showDatePicker); // Toggle the state
     };
+
+    const handleDateChange = (event, date) => {
+        if (date) {
+            const selectedDate = date.toISOString().split('T')[0];
+            setSelectedDate(new Date(selectedDate));
+        }
+        setShowDatePicker(false); // Close the date picker
+    };
+
+    // Use useEffect to watch for changes in filteredTransactions
+    useEffect(() => {
+        // Check if there are transactions in the selected month
+        const hasTransactionsInMonth = filteredTransactions.length > 0;
+        if (hasTransactionsInMonth) {
+            // If there are transactions, close the date picker
+            setShowDatePicker(false);
+        }
+    }, [filteredTransactions]);
 
     return (
         <ScrollView style={styles.container}>
@@ -45,13 +63,7 @@ function StatsScreen() {
                     value={selectedDate}
                     mode="date"
                     display="spinner"
-                    onChange={(event, date) => {
-                        if (date) {
-                            const selectedDate = date.toISOString().split('T')[0];
-                            setSelectedDate(new Date(selectedDate));
-                        }
-                        toggleDatePicker(); // Close the date picker
-                    }}
+                    onChange={handleDateChange} // Use the handleDateChange function
                 />
             )}
 
