@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text } from 'react-native';
 import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
 import SelectCategory from '../components/SelectCategory';
 import SelectDate from '../components/SelectDate';
+import { StorageContext } from '../components/Storage'; // Import the StorageContext
 import TransactionType from '../components/TransactionType';
+
+
+
 
 
 function AddExpenseScreen({ navigation }) {  // Added navigation prop here
@@ -20,7 +24,14 @@ function AddExpenseScreen({ navigation }) {  // Added navigation prop here
     { label: 'Entertainment', value: 'Entertainment' },
     { label: 'Healthcare', value: 'Healthcare' }
   ];
-    
+
+  const { addExpense } = useContext(StorageContext); // Use the context
+
+  const handleAddExpense = () => {
+    const newExpense = { amount, type, category, date: date.toISOString(), note };
+    addExpense(newExpense); // Save the expense
+    navigation.navigate('Stats'); // Navigate to Stats screen
+  };
 
     return (
       <ScrollView style={styles.container}>
@@ -32,16 +43,14 @@ function AddExpenseScreen({ navigation }) {  // Added navigation prop here
           <AddNotes value={note} onChange={setNote} />
 
           <Button
-                title="Go to Stats Screen"
-                onPress={() => navigation.navigate('Stats', {
-                  newExpense: { amount, type, category, date: date.toISOString(), note }
-                })}
-                
-                /><Button
-            title="Go to Budget"
-            onPress={() => navigation.navigate('Budget')}  // Use the name of the screen as defined in the Stack.Navigator
-        />
-      </ScrollView>
+        title="Save Expense"
+        onPress={handleAddExpense} // Use handleAddExpense
+      />
+      <Button
+        title="Go to Budget"
+        onPress={() => navigation.navigate('Budget')}
+      />
+    </ScrollView>
   );
 }
 

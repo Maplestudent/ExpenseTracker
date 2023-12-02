@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StorageContext } from '../components/Storage'; // Import the StorageContext
 import TransactionType from '../components/TransactionType';
 
-function StatsScreen({ route }) {
+function StatsScreen() {
     const [type, setType] = useState('Expense');
     const [startDate, setStartDate] = useState('2023/10/01');
     const [endDate, setEndDate] = useState('2023/10/30');
-    const newExpense = route.params?.newExpense;
+    const { expenses } = useContext(StorageContext); // Use the context
+
 
     // Convert the date string back to a Date object
-    const expenseDate = newExpense?.date ? new Date(newExpense.date) : null;
+    
 
 
     const handlePreviousMonth = () => {
@@ -63,15 +65,15 @@ function StatsScreen({ route }) {
             </View>
             <TransactionType type={type} onSelect={setType} />
 
-            {newExpense && (
-                <View style={styles.expenseContainer}>
-                    <Text style={styles.expenseText}>Amount: {newExpense.amount}</Text>
-                    <Text style={styles.expenseText}>Type: {newExpense.type}</Text>
-                    <Text style={styles.expenseText}>Category: {newExpense.category}</Text>
-                    <Text style={styles.expenseText}>Date: {expenseDate ? expenseDate.toDateString() : 'Invalid Date'}</Text>
-                    <Text style={styles.expenseText}>Note: {newExpense.note}</Text>
+            {expenses.map((expense, index) => (
+                <View key={index} style={styles.expenseContainer}>
+                    <Text style={styles.expenseText}>Amount: {expense.amount}</Text>
+                    <Text style={styles.expenseText}>Type: {expense.type}</Text>
+                    <Text style={styles.expenseText}>Category: {expense.category}</Text>
+                    <Text style={styles.expenseText}>Date: {new Date(expense.date).toDateString()}</Text>
+                    <Text style={styles.expenseText}>Note: {expense.note}</Text>
                 </View>
-            )}
+            ))}
         </ScrollView>
     );
 }
