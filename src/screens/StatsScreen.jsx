@@ -43,6 +43,7 @@ function StatsScreen() {
 
     return (
         <ScrollView style={styles.container}>
+            <Text style={styles.header}>Stats</Text>
             <TouchableOpacity style={styles.datePickerButton} onPress={toggleDatePicker}>
                 <Text style={styles.datePickerButtonText}>{formatDate(startOfMonth)} - {formatDate(endOfMonth)}</Text>
             </TouchableOpacity>
@@ -60,7 +61,7 @@ function StatsScreen() {
 
             {filteredTransactions.map((transaction) => (
                 <View key={transaction.id} style={styles.expenseContainer}>
-                    <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
+                    <Text style={styles.expenseText}>Amount: ${transaction.amount}</Text>
                     <Text style={styles.expenseText}>Type: {transaction.type}</Text>
                     <Text style={styles.expenseText}>Category: {transaction.category}</Text>
                     <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
@@ -77,12 +78,23 @@ function StatsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        backgroundColor: '#fff4e4',
     },
+    header: {
+        height: 50,
+        padding: 10,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#000000',
+        marginBottom: 20,
+        backgroundColor: '#5cccc4',
+      },
     datePickerButton: {
         alignItems: 'center',
-        marginBottom: 10,
-        backgroundColor: '#f0f0f0',
+        marginLeft: 35,
+        marginRight: 35,
+        backgroundColor: '#ffffff',
         padding: 10,
         borderRadius: 8,
         borderWidth: 1, // Add border width
@@ -94,10 +106,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     expenseContainer: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor: '#ffffff',
         padding: 10,
         borderRadius: 8,
         marginBottom: 10,
+        marginLeft: 25,
+        marginRight: 25,
     },
     expenseText: {
         fontSize: 14,

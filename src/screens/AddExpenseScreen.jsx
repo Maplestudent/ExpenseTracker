@@ -57,7 +57,7 @@ function AddExpenseScreen({ navigation }) {
       <AddNotes value={note} onChange={setNote} />
 
       <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
-        <Text style={styles.buttonText}>Save Expense</Text>
+        <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Stats')}>
