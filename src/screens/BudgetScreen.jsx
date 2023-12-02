@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 function BudgetScreen() {
     const navigation = useNavigation();
@@ -26,10 +26,18 @@ function BudgetScreen() {
     
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            
-            <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
-                <Text style={styles.text}>Add New Expense</Text>
+        <View style={styles.container}>
+          <View style={styles.userContainer}>
+            <Text style={styles.title}>Welcome to JK Expense Tracker!</Text>
+          </View>
+
+          <TouchableOpacity style={styles.button1} onPress={handleIncomeExpenseScreen}>
+            <Text style={styles.text}>View Income & Expenses</Text>
+          </TouchableOpacity>
+
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={[styles.button2, styles.buttonWithMargin]} onPress={handleAddExpense}>
+              <Text style={styles.text}>Add New Expense</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button3} onPress={handleStatsScreen}>
               <Text style={styles.text}>See Stats</Text>
