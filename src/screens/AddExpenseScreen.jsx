@@ -10,7 +10,7 @@ import TransactionType from '../components/TransactionType';
 function AddExpenseScreen({ navigation }) {  // Added navigation prop here
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('Expense');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Food');
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
   const categories = [
@@ -33,8 +33,11 @@ function AddExpenseScreen({ navigation }) {  // Added navigation prop here
 
           <Button
                 title="Go to Stats Screen"
-                onPress={() => navigation.navigate('Stats')}  // Use the name of the screen as defined in the Stack.Navigator
-            /><Button
+                onPress={() => navigation.navigate('Stats', {
+                  newExpense: { amount, type, category, date: date.toISOString(), note }
+                })}
+                
+                /><Button
             title="Go to Budget"
             onPress={() => navigation.navigate('Budget')}  // Use the name of the screen as defined in the Stack.Navigator
         />
