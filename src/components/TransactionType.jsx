@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const TransactionType = ({ type, onSelect }) => (
   <View style={styles.container}>
@@ -21,12 +21,28 @@ const TransactionType = ({ type, onSelect }) => (
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 10,
   },
   button: {
-    padding: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 20, 
+    marginHorizontal: 5, 
+    borderRadius: 20,
+    borderWidth: 1, 
+    borderColor: 'transparent', 
+    backgroundColor: '#ffffff', 
   },
   selected: {
-    borderBottomWidth: 2,
+    backgroundColor: '#5cccc4', 
+    borderColor: '#bfefff',
+    borderBottomWidth: 3,
+    borderBottomColor: '#007bff', 
+  },
+  text: {
+    color: '#000000', 
+    fontWeight: 'bold', 
   },
 });
 

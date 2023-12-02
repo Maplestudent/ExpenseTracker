@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 const AddNotes = ({ value, onChange }) => (
   <TextInput
@@ -15,8 +15,12 @@ const AddNotes = ({ value, onChange }) => (
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
+    borderRadius: 8,
     padding: 10,
-    margin: 10,
+    marginTop: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    backgroundColor: '#ffffff',
   },
 });
 

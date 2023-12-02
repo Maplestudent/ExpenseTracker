@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import { View, Button, Platform, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const SelectDate = ({ date, onDateChange }) => {
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    setShow(false);
+    setShow(false); 
     if (selectedDate) {
       onDateChange(selectedDate);
     }
   };
-  
 
   return (
-    <View>
-      <Button onPress={() => setShow(true)} title="Show date picker!" />
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={() => setShow(true)}>
+        <Text style={styles.buttonText}>Select Date</Text>
+      </TouchableOpacity>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -29,5 +30,26 @@ const SelectDate = ({ date, onDateChange }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 35,
+    marginRight: 35,
+  },
+  button: {
+    backgroundColor: '#5cccc4',
+    padding: 10, 
+    borderRadius: 5, 
+
+  },
+  buttonText: {
+    color: '#ffffff', 
+    textAlign: 'center', 
+
+  },
+
+});
 
 export default SelectDate;
