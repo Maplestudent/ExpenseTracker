@@ -23,59 +23,11 @@ function BudgetScreen() {
         navigation.navigate('IncomeExpenseScreen'); // Navigate to IncomeExpenseScreen
     };
 
-    const handlePreviousMonth = () => {
-        const [month, year] = datePeriod.split(' ');
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
     
-        let currentMonthIndex = months.indexOf(month);
-        let currentYear = parseInt(year);
-    
-        if (currentMonthIndex === 0) {
-            currentMonthIndex = 11; // December
-            currentYear--;
-        } else {
-            currentMonthIndex--;
-        }
-    
-        const previousMonth = `${months[currentMonthIndex]} ${currentYear}`;
-        setDatePeriod(previousMonth);
-    };
-    
-    const handleNextMonth = () => {
-        const [month, year] = datePeriod.split(' ');
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-    
-        let currentMonthIndex = months.indexOf(month);
-        let currentYear = parseInt(year);
-    
-        if (currentMonthIndex === 11) {
-            currentMonthIndex = 0; // January
-            currentYear++;
-        } else {
-            currentMonthIndex++;
-        }
-    
-        const nextMonth = `${months[currentMonthIndex]} ${currentYear}`;
-        setDatePeriod(nextMonth);
-    };
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={styles.datePeriodContainer}>
-                <TouchableOpacity onPress={handlePreviousMonth}>
-                    <Text style={styles.arrow}>{'< '}</Text>
-                </TouchableOpacity>
-                <Text style={styles.datePeriodText}>{datePeriod}</Text>
-                <TouchableOpacity onPress={handleNextMonth}>
-                    <Text style={styles.arrow}>{' >'}</Text>
-                </TouchableOpacity>
-            </View>
+            
             <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
                 <Text style={styles.text}>Add New Expense</Text>
             </TouchableOpacity>
