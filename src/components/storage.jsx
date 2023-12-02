@@ -1,26 +1,42 @@
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useEffect, useState } from 'react';
 
-const EXPENSES_KEY = 'expenses';
+export const StorageContext = createContext();
 
-export const storeExpenses = async (expenses) => {
-  try {
-    const jsonValue = JSON.stringify(expenses);
-    await AsyncStorage.setItem(EXPENSES_KEY, jsonValue);
-  } catch (e) {
-    // saving error
-    console.error('Error storing the expenses', e);
-  }
+export const StorageProvider = ({ children }) => {
+  const [expenses, setExpenses] = useState([]);
+
+  const loadExpenses = async () => {
+    try {
+      const savedExpenses = await AsyncStorage.getItem('expenses');
+      if (savedExpenses !== null) {
+        setExpenses(JSON.parse(savedExpenses));
+      }
+    } catch (e) {
+      // Error retrieving data
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    loadExpenses();
+  }, []);
+
+  const addExpense = async (newExpense) => {
+    const updatedExpenses = [...expenses, newExpense];
+    try {
+      await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      setExpenses(updatedExpenses);
+    } catch (e) {
+      // Error saving data
+      console.error(e);
+    }
+  };
+
+  return (
+    <StorageContext.Provider value={{ expenses, addExpense }}>
+      {children}
+    </StorageContext.Provider>
+  );
 };
-
-export const getExpenses = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(EXPENSES_KEY);
-    return jsonValue != null ? JSON.parse(jsonValue) : [];
-  } catch (e) {
-    // error reading value
-    console.error('Error reading the expenses', e);
-    return [];
-  }
-};
-
-// Add more functions for handling other AsyncStorage operations if needed
