@@ -69,36 +69,36 @@ function IncomeExpenseScreen() {
 
       {/* Income and Expenses Table */}
       <View style={styles.table}>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Total Income:</Text>
-          <Text style={styles.tableCell}>{totalIncome.toFixed(2)}</Text>
-        </View>
-        {/* Display total and breakdown of income */}
-        {Object.entries(incomeByCategory).map(([category, amount]) => (
-          <View style={styles.tableRow} key={'income-' + category}>
-            <Text style={styles.tableCell}>{category}:</Text>
-            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
-          </View>
-        ))}
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Total Expenses:</Text>
-          <Text style={styles.tableCell}>{totalExpenses.toFixed(2)}</Text>
-        </View>
-        {/* Display total and breakdown of expenses */}
-        {Object.entries(expensesByCategory).map(([category, amount]) => (
-          <View style={styles.tableRow} key={'expense-' + category}>
-            <Text style={styles.tableCell}>{category}:</Text>
-            <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
-          </View>
-        ))}
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Balance:</Text>
-          <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
-            {balance.toFixed(2)}
-          </Text>
-        </View>
-      </View>
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.incomeText]}>Total Income:</Text>
+      <Text style={[styles.tableCell, styles.incomeText]}>{totalIncome.toFixed(2)}</Text>
     </View>
+    {/* Display total and breakdown of income */}
+    {Object.entries(incomeByCategory).map(([category, amount]) => (
+      <View style={styles.tableRow} key={'income-' + category}>
+        <Text style={styles.tableCell}>{category}:</Text>
+        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+      </View>
+    ))}
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.expenseText]}>Total Expenses:</Text>
+      <Text style={[styles.tableCell, styles.expenseText]}>{totalExpenses.toFixed(2)}</Text>
+    </View>
+    {/* Display total and breakdown of expenses */}
+    {Object.entries(expensesByCategory).map(([category, amount]) => (
+      <View style={styles.tableRow} key={'expense-' + category}>
+        <Text style={styles.tableCell}>{category}:</Text>
+        <Text style={styles.tableCell}>{amount.toFixed(2)}</Text>
+      </View>
+    ))}
+    <View style={styles.tableRow}>
+      <Text style={[styles.tableCell, styles.incomeText]}>Balance:</Text>
+      <Text style={[styles.tableCell, { color: balance >= 0 ? 'green' : 'red' }]}>
+        {balance.toFixed(2)}
+      </Text>
+    </View>
+  </View>
+</View>
   );
 }
 
@@ -162,6 +162,12 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     fontSize: 18,
+  },
+  expenseText: {
+    color: 'red', // Set the expense text to red
+  },
+  incomeText: {
+    color: 'green', // Set the income text to green
   },
   // Add more styles as needed
 });
