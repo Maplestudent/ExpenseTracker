@@ -13,6 +13,7 @@ const expenseCategories = [
   { label: 'Utilities', value: 'Utilities' },
   { label: 'Entertainment', value: 'Entertainment' },
   { label: 'Healthcare', value: 'Healthcare' },
+  { label: 'Others', value: 'Others' },
 ];
 
 const incomeCategories = [

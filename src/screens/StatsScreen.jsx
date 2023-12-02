@@ -1,111 +1,95 @@
+import DateTimePicker from '@react-native-community/datetimepicker'; // Import the DateTimePicker component
 import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StorageContext } from '../components/Storage'; // Import the StorageContext
 import TransactionType from '../components/TransactionType';
 
 function StatsScreen() {
     const [type, setType] = useState('Expense');
-    const [startDate, setStartDate] = useState('2023/10/01');
-    const [endDate, setEndDate] = useState('2023/10/30');
+    const [selectedDate, setSelectedDate] = useState(new Date('2023-10-01')); // Use a JavaScript Date object
     const { expenses, deleteExpense } = useContext(StorageContext); // Use the deleteExpense function from the context
     const handleDelete = (id) => {
         deleteExpense(id);
     };
 
+    // Calculate the start and end dates based on selectedDate
+    const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+    const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+    const formattedStartDate = `${startOfMonth.getFullYear()}/${(startOfMonth.getMonth() + 1).toString().padStart(2, '0')}/01`;
+    const formattedEndDate = `${endOfMonth.getFullYear()}/${(endOfMonth.getMonth() + 1).toString().padStart(2, '0')}/${endOfMonth.getDate()}`;
 
-    // Convert the date string back to a Date object
-    const filteredTransactions = expenses.filter(transaction => transaction.type === type);
+    // Filter transactions based on the selected date
+    const filteredTransactions = expenses.filter((transaction) => {
+        const transactionDate = new Date(transaction.date);
+        return (
+            transaction.type === type &&
+            transactionDate >= startOfMonth &&
+            transactionDate <= endOfMonth
+        );
+    });
 
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
-
-    const handlePreviousMonth = () => {
-        const [year, month, day] = startDate.split('/');
-        const currentMonth = parseInt(month);
-        let newYear = parseInt(year);
-        let newMonth = currentMonth - 1;
-
-        if (newMonth === 0) {
-            newMonth = 12;
-            newYear--;
-        }
-
-        const previousStartDate = `${newYear}/${newMonth.toString().padStart(2, '0')}/01`;
-        setStartDate(previousStartDate);
-
-        const daysInPreviousMonth = new Date(newYear, newMonth, 0).getDate();
-        const previousEndDate = `${newYear}/${newMonth.toString().padStart(2, '0')}/${daysInPreviousMonth}`;
-        setEndDate(previousEndDate);
-    };
-
-    const handleNextMonth = () => {
-        const [year, month, day] = startDate.split('/');
-        const currentMonth = parseInt(month);
-        let newYear = parseInt(year);
-        let newMonth = currentMonth + 1;
-
-        if (newMonth === 13) {
-            newMonth = 1; // Set to January
-            newYear++;
-        }
-
-        const nextStartDate = `${newYear}/${newMonth.toString().padStart(2, '0')}/01`;
-        setStartDate(nextStartDate);
-
-        const daysInNextMonth = new Date(newYear, newMonth, 0).getDate();
-        const nextEndDate = `${newYear}/${newMonth.toString().padStart(2, '0')}/${daysInNextMonth}`;
-        setEndDate(nextEndDate);
+    const toggleDatePicker = () => {
+        setShowDatePicker(!showDatePicker);
     };
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.datePeriodContainer}>
-                <TouchableHighlight onPress={handlePreviousMonth}>
-                    <Text style={styles.arrow}>{'<'}</Text>
-                </TouchableHighlight>
-                <Text style={styles.datePeriodText}>{startDate} - {endDate}</Text>
-                <TouchableHighlight onPress={handleNextMonth}>
-                    <Text style={styles.arrow}>{'>'}</Text>
-                </TouchableHighlight>
-            </View>
+            <TouchableOpacity style={styles.datePickerButton} onPress={toggleDatePicker}>
+                <Text style={styles.datePickerButtonText}>{formattedStartDate} - {formattedEndDate}</Text>
+            </TouchableOpacity>
+
+            {showDatePicker && (
+                <DateTimePicker
+                    value={selectedDate}
+                    mode="date"
+                    display="spinner"
+                    onChange={(event, date) => {
+                        if (date) {
+                            const selectedDate = date.toISOString().split('T')[0];
+                            setSelectedDate(new Date(selectedDate));
+                        }
+                        toggleDatePicker(); // Close the date picker
+                    }}
+                />
+            )}
+
             <TransactionType type={type} onSelect={setType} />
       
             {filteredTransactions.map((transaction) => (
                 <View key={transaction.id} style={styles.expenseContainer}>
-                <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
-                <Text style={styles.expenseText}>Type: {transaction.type}</Text>
-                <Text style={styles.expenseText}>Category: {transaction.category}</Text>
-                <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
-                <Text style={styles.expenseText}>Note: {transaction.note}</Text>
-                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(transaction.id)}>
-                  <Text style={styles.deleteButtonText}>Delete</Text>
-                </TouchableOpacity>
-              </View>
+                    <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
+                    <Text style={styles.expenseText}>Type: {transaction.type}</Text>
+                    <Text style={styles.expenseText}>Category: {transaction.category}</Text>
+                    <Text style={styles.expenseText}>Date: {new Date(transaction.date).toDateString()}</Text>
+                    <Text style={styles.expenseText}>Note: {transaction.note}</Text>
+                    <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(transaction.id)}>
+                        <Text style={styles.deleteButtonText}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
             ))}
         </ScrollView>
-      );      
+    );      
 }
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
     },
-    datePeriodContainer: {
-        flexDirection: 'row',
+    datePickerButton: {
         alignItems: 'center',
-        justifyContent: 'space-between',
+        marginBottom: 10,
         backgroundColor: '#f0f0f0',
         padding: 10,
         borderRadius: 8,
-        marginBottom: 20,
+        borderWidth: 1, // Add border width
+        borderColor: 'black', // Add border color
     },
-    datePeriodText: {
+    
+    datePickerButtonText: {
         fontSize: 16,
-        fontWeight: 'bold',
-    },
-    arrow: {
-        fontSize: 20,
         fontWeight: 'bold',
     },
     expenseContainer: {
@@ -123,11 +107,11 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         borderRadius: 5,
-      },
-      deleteButtonText: {
+    },
+    deleteButtonText: {
         color: 'white',
         textAlign: 'center',
-      },
+    },
 });
 
 export default StatsScreen;
