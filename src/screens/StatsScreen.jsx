@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableHighlight  } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import TransactionType from '../components/TransactionType';
 
 function StatsScreen() {
