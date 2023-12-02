@@ -1,24 +1,33 @@
-import DateTimePicker from '@react-native-community/datetimepicker'; // Import the DateTimePicker component
-import React, { useContext, useEffect, useState } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useCallback, useContext, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { StorageContext } from '../components/Storage'; // Import the StorageContext
+import { StorageContext } from '../components/Storage';
 import TransactionType from '../components/TransactionType';
 
 function StatsScreen() {
     const [type, setType] = useState('Expense');
-    const [selectedDate, setSelectedDate] = useState(new Date('2023-10-01')); // Use a JavaScript Date object
-    const { expenses, deleteExpense } = useContext(StorageContext); // Use the deleteExpense function from the context
-    const handleDelete = (id) => {
-        deleteExpense(id);
-    };
+    const [selectedDate, setSelectedDate] = useState(new Date('2023-10-01'));
+    const { expenses, deleteExpense } = useContext(StorageContext);
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
-    // Calculate the start and end dates based on selectedDate
+    const handleDelete = useCallback((id) => {
+        deleteExpense(id);
+    }, [deleteExpense]);
+
+    const toggleDatePicker = useCallback(() => {
+        setShowDatePicker(currentShow => !currentShow);
+    }, []);
+
+    const handleDateChange = useCallback((event, date) => {
+        setShowDatePicker(false);
+        if (date) {
+            setSelectedDate(date);
+        }
+    }, []);
+
     const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
     const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
-    const formattedStartDate = `${startOfMonth.getFullYear()}/${(startOfMonth.getMonth() + 1).toString().padStart(2, '0')}/01`;
-    const formattedEndDate = `${endOfMonth.getFullYear()}/${(endOfMonth.getMonth() + 1).toString().padStart(2, '0')}/${endOfMonth.getDate()}`;
 
-    // Filter transactions based on the selected date
     const filteredTransactions = expenses.filter((transaction) => {
         const transactionDate = new Date(transaction.date);
         return (
@@ -28,34 +37,14 @@ function StatsScreen() {
         );
     });
 
-    const [showDatePicker, setShowDatePicker] = useState(false);
-
-    const toggleDatePicker = () => {
-        setShowDatePicker(!showDatePicker); // Toggle the state
+    const formatDate = (date) => {
+        return `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
     };
-
-    const handleDateChange = (event, date) => {
-        if (date) {
-            const selectedDate = date.toISOString().split('T')[0];
-            setSelectedDate(new Date(selectedDate));
-        }
-        setShowDatePicker(false); // Close the date picker
-    };
-
-    // Use useEffect to watch for changes in filteredTransactions
-    useEffect(() => {
-        // Check if there are transactions in the selected month
-        const hasTransactionsInMonth = filteredTransactions.length > 0;
-        if (hasTransactionsInMonth) {
-            // If there are transactions, close the date picker
-            setShowDatePicker(false);
-        }
-    }, [filteredTransactions]);
 
     return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.datePickerButton} onPress={toggleDatePicker}>
-                <Text style={styles.datePickerButtonText}>{formattedStartDate} - {formattedEndDate}</Text>
+                <Text style={styles.datePickerButtonText}>{formatDate(startOfMonth)} - {formatDate(endOfMonth)}</Text>
             </TouchableOpacity>
 
             {showDatePicker && (
@@ -63,12 +52,12 @@ function StatsScreen() {
                     value={selectedDate}
                     mode="date"
                     display="spinner"
-                    onChange={handleDateChange} // Use the handleDateChange function
+                    onChange={handleDateChange}
                 />
             )}
 
             <TransactionType type={type} onSelect={setType} />
-      
+
             {filteredTransactions.map((transaction) => (
                 <View key={transaction.id} style={styles.expenseContainer}>
                     <Text style={styles.expenseText}>Amount: {transaction.amount}</Text>
