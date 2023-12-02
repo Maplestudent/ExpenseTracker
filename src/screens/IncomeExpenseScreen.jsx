@@ -106,25 +106,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5', // Use a light gray as in the image background
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 30,
+    color: '#008080', // Color similar to the header in the image
   },
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc', // Assuming a border like the one in the image
+    borderRadius: 5,
+    backgroundColor: '#fff', // White background for the picker
   },
   picker: {
-    width: 120,
-    height: 44,
+    flex: 1,
+    height: 50, // Adjusted for better touch area
+    color: '#008080', // Picker text color
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    fontSize: 18,
+  },
+  button: {
+    backgroundColor: '#008080', // Button background color
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   table: {
-    // Style your table as needed
+    // Your table styles will go here
   },
   tableRow: {
     flexDirection: 'row',
@@ -138,5 +165,6 @@ const styles = StyleSheet.create({
   },
   // Add more styles as needed
 });
+
 
 export default IncomeExpenseScreen;
