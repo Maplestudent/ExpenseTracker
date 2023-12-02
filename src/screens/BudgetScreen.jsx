@@ -19,6 +19,10 @@ function BudgetScreen() {
         navigation.navigate('Stats');
     };
 
+    const handleIncomeExpenseScreen = () => {
+        navigation.navigate('IncomeExpenseScreen'); // Navigate to IncomeExpenseScreen
+    };
+
     const handlePreviousMonth = () => {
         const [month, year] = datePeriod.split(' ');
         const months = [
@@ -78,6 +82,9 @@ function BudgetScreen() {
 
             <TouchableOpacity style={styles.button} onPress={handleStatsScreen}>
                 <Text style={styles.text}>See Stats</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleIncomeExpenseScreen}>
+                <Text style={styles.text}>View Income & Expenses</Text>
             </TouchableOpacity>
 
             
