@@ -41,10 +41,20 @@ function AddExpenseScreen({ navigation }) {
     setCategory(newCategories[0].value); // Reset category when type changes
   };
 
+  const resetForm = () => {
+    setAmount('');
+    setType('Expense');
+    setCategory('Food');
+    setDate(new Date());
+    setNote('');
+    setCategories(expenseCategories);
+  };
+
+
   const handleAddExpense = () => {
     const newExpense = { amount, type, category, date: date.toISOString(), note };
     addExpense(newExpense);
-    navigation.navigate('Stats');
+    resetForm(); // Reset form fields after adding expense
   };
 
   return (
