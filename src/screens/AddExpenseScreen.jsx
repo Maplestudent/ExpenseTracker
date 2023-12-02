@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AddNotes from '../components/AddNotes';
 import InputAmount from '../components/InputAmount';
 import SelectCategory from '../components/SelectCategory';
@@ -56,9 +56,17 @@ function AddExpenseScreen({ navigation }) {
       <SelectDate date={date} onDateChange={setDate} />
       <AddNotes value={note} onChange={setNote} />
 
-      <Button title="Save Expense" onPress={handleAddExpense} />
-      <Button title="View Stats" onPress={() => navigation.navigate('Stats')} />
-      <Button title="Go to Budget" onPress={() => navigation.navigate('Budget')} />
+      <TouchableOpacity style={styles.button} onPress={handleAddExpense}>
+        <Text style={styles.buttonText}>Save Expense</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Stats')}>
+        <Text style={styles.buttonText}>View Stats</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Budget')}>
+        <Text style={styles.buttonText}>Go to Budget</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -66,12 +74,30 @@ function AddExpenseScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor: '#fff4e4',
   },
   header: {
+    height: 50,
+    padding: 10,
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#000000',
     marginBottom: 20,
+    backgroundColor: '#5cccc4',
+  },
+  button: {
+    backgroundColor: '#5cccc4',
+    padding: 10, 
+    borderRadius: 5, 
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+  },
+  buttonText: {
+    color: '#ffffff', 
+    textAlign: 'center', 
+
   },
   // Add styles for your components as needed
 });
